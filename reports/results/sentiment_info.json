@@ -1,0 +1,6 @@
+{
+  "scorer_used": "vader",
+  "requested": "finbert",
+  "n_headlines": 29810,
+  "corr_finbert_vader": null
+}

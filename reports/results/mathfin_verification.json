@@ -1,0 +1,34 @@
+{
+  "checks": {
+    "simple_return": true,
+    "log_return": true,
+    "variance": true,
+    "volatility": true,
+    "covariance": true,
+    "correlation": true,
+    "beta": true,
+    "cov_matrix": true,
+    "portfolio_vol": true,
+    "sharpe": true,
+    "max_drawdown": true,
+    "var_hist": true,
+    "gd_matches_ols_weights": true,
+    "gd_matches_ols_bias": true,
+    "cov_vs_pypfopt_sample": true
+  },
+  "all_pass": true,
+  "gd_vs_ols": {
+    "gd_w": [
+      1.50802,
+      -2.00596,
+      0.50409
+    ],
+    "ols_w": [
+      1.50802,
+      -2.00596,
+      0.50409
+    ],
+    "gd_b": 0.70505,
+    "ols_b": 0.70505
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "trend": {
+    "AAPL": 0.2,
+    "CAT": 6.4,
+    "HD": 3.2,
+    "JNJ": 0.7,
+    "JPM": 3.1,
+    "KO": 2.9,
+    "MSFT": 11.2,
+    "NVDA": 2.1,
+    "PG": 0.9,
+    "XOM": 1.6
+  },
+  "adf": {
+    "price_nonstationary": 8,
+    "returns_stationary": 10,
+    "n": 10
+  },
+  "corr": {
+    "mean_pairwise": 0.2758725812621784,
+    "min": 0.16409184026619858,
+    "max": 0.42434240560137465,
+    "n_collinear_pairs_gt_0.95": 7
+  },
+  "vol": {
+    "corr_with_vix": 0.8888383752655089,
+    "mean_acf1_squared_returns": 0.05827711055142487
+  },
+  "season": {
+    "anova_month_p": 0.3020777644118166,
+    "stl_seasonal_range": 0.11236383658236238
+  },
+  "dist": {
+    "skew": 0.021378455913668708,
+    "excess_kurtosis": 12.39899170026679,
+    "jb_p": 0.0
+  }
+}

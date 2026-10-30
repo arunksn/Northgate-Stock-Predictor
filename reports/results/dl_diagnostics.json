@@ -1,0 +1,66 @@
+{
+  "lstm_h1": {
+    "epochs_run": 19,
+    "best_epoch": 7,
+    "train_loss_at_best": 0.34785640239715576,
+    "val_loss_at_best": 0.38589686155319214,
+    "val_to_train_ratio": 1.1093567888757865,
+    "verdict": "overfitting (validation loss rose while training loss kept falling)"
+  },
+  "gru_h1": {
+    "epochs_run": 18,
+    "best_epoch": 6,
+    "train_loss_at_best": 0.34696850180625916,
+    "val_loss_at_best": 0.38793694972991943,
+    "val_to_train_ratio": 1.1180754094691174,
+    "verdict": "overfitting (validation loss rose while training loss kept falling)"
+  },
+  "bilstm_h1": {
+    "epochs_run": 15,
+    "best_epoch": 3,
+    "train_loss_at_best": 0.3475300669670105,
+    "val_loss_at_best": 0.38819417357444763,
+    "val_to_train_ratio": 1.117008887784369,
+    "verdict": "overfitting (validation loss rose while training loss kept falling)"
+  },
+  "transformer_h1": {
+    "epochs_run": 20,
+    "best_epoch": 8,
+    "train_loss_at_best": 0.3507901132106781,
+    "val_loss_at_best": 0.3880300223827362,
+    "val_to_train_ratio": 1.1061600876695532,
+    "verdict": "overfitting (validation loss rose while training loss kept falling)"
+  },
+  "lstm_h5": {
+    "epochs_run": 16,
+    "best_epoch": 4,
+    "train_loss_at_best": 0.39105165004730225,
+    "val_loss_at_best": 0.4312644302845001,
+    "val_to_train_ratio": 1.1028324013780115,
+    "verdict": "overfitting (validation loss rose while training loss kept falling)"
+  },
+  "gru_h5": {
+    "epochs_run": 16,
+    "best_epoch": 4,
+    "train_loss_at_best": 0.38973456621170044,
+    "val_loss_at_best": 0.43105044960975647,
+    "val_to_train_ratio": 1.1060103131206833,
+    "verdict": "overfitting (validation loss rose while training loss kept falling)"
+  },
+  "bilstm_h5": {
+    "epochs_run": 13,
+    "best_epoch": 1,
+    "train_loss_at_best": 0.40552616119384766,
+    "val_loss_at_best": 0.4353009760379791,
+    "val_to_train_ratio": 1.073422673290611,
+    "verdict": "overfitting (validation loss rose while training loss kept falling)"
+  },
+  "transformer_h5": {
+    "epochs_run": 14,
+    "best_epoch": 2,
+    "train_loss_at_best": 0.40653517842292786,
+    "val_loss_at_best": 0.4322316348552704,
+    "val_to_train_ratio": 1.0632084449174284,
+    "verdict": "overfitting (validation loss rose while training loss kept falling)"
+  }
+}

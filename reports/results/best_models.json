@@ -1,0 +1,22 @@
+{
+  "1": {
+    "model": "LSTM",
+    "beats_rw_mae": true,
+    "beats_rw_dir": true,
+    "test_mae": 4.9019595068952055,
+    "rw_mae": 4.903642115478928,
+    "test_dir": 51.69590643274854,
+    "rw_dir": 50.55555555555556,
+    "acceptance_met": true
+  },
+  "5": {
+    "model": "GRU",
+    "beats_rw_mae": false,
+    "beats_rw_dir": true,
+    "test_mae": 11.440801719612223,
+    "rw_mae": 11.428489786608107,
+    "test_dir": 52.662721893491124,
+    "rw_dir": 49.76331360946746,
+    "acceptance_met": false
+  }
+}

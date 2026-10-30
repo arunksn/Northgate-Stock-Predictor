@@ -1,0 +1,100 @@
+{
+  "best_forecaster": "LSTM",
+  "val_end": "2025-03-21",
+  "test_start": "2025-03-25",
+  "mu_method": "50% historical mean + 50% model-implied (last 63 validation days), estimated up to the validation end only",
+  "weights": {
+    "AAPL": 0.0,
+    "MSFT": 0.08314,
+    "JPM": 0.20597,
+    "XOM": 0.0,
+    "JNJ": 0.0,
+    "PG": 0.0,
+    "NVDA": 0.2575,
+    "KO": 0.0,
+    "CAT": 0.15339,
+    "HD": 0.3
+  },
+  "weights_min_var": {
+    "AAPL": 0.02507,
+    "MSFT": 0.0,
+    "JPM": 0.22073,
+    "XOM": 0.06563,
+    "JNJ": 0.1697,
+    "PG": 0.05883,
+    "NVDA": 0.24223,
+    "KO": 0.04199,
+    "CAT": 0.08376,
+    "HD": 0.09206
+  },
+  "fallback_min_vol": false,
+  "in_sample": {
+    "ret": 0.1045273705778095,
+    "vol": 0.17232361664092358,
+    "sharpe": 0.37445459789918006
+  },
+  "min_var_in_sample": {
+    "ret": 0.07235297717739371,
+    "vol": 0.1555562112651341,
+    "sharpe": 0.20798254800800234
+  },
+  "mc_check": {
+    "mc_max_sharpe": 0.353500712033276,
+    "optimiser_sharpe": 0.37445459789918006,
+    "optimiser_ge_mc": true,
+    "n_mc": 20000
+  },
+  "backtest": {
+    "Optimised (max-Sharpe)": {
+      "ann_return": 0.15790138189713776,
+      "ann_vol": 0.1590225518333697,
+      "sharpe": 0.7499682788695007,
+      "sharpe_ci95": [
+        -0.5623883655348585,
+        1.9817685747790355
+      ],
+      "sortino": 1.1073210029651432,
+      "max_drawdown": -0.10131578406737429,
+      "calmar": 1.558507229161198,
+      "beta": 0.9355284842043489,
+      "var95_hist": -0.014701203528289181,
+      "var95_t": -0.015574241692481576,
+      "total_return": 0.2627537085392271
+    },
+    "Equal-weight": {
+      "ann_return": 0.13866706901524273,
+      "ann_vol": 0.1467604325964692,
+      "sharpe": 0.6856855910592589,
+      "sharpe_ci95": [
+        -0.5283915058313046,
+        1.9411408326713822
+      ],
+      "sortino": 1.0133657977015713,
+      "max_drawdown": -0.09020214519070924,
+      "calmar": 1.5372923639683609,
+      "beta": 1.062740243782426,
+      "var95_hist": -0.014208289510848003,
+      "var95_t": -0.014406632731711302,
+      "total_return": 0.22953944099340529
+    },
+    "Benchmark buy-and-hold": {
+      "ann_return": 0.12599971288882506,
+      "ann_vol": 0.1231212608005136,
+      "sharpe": 0.7005732101724557,
+      "sharpe_ci95": [
+        -0.6706348382844605,
+        2.1886991672849514
+      ],
+      "sortino": 1.0381021676361566,
+      "max_drawdown": -0.08242385092853377,
+      "calmar": 1.5286802481247093,
+      "beta": 1.0,
+      "var95_hist": -0.011876209861949583,
+      "var95_t": -0.011865887362919722,
+      "total_return": 0.20784529047202716
+    }
+  },
+  "risk_free_rate": 0.04,
+  "max_weight": 0.3,
+  "acceptance_sharpe_gt_equal_weight": true
+}

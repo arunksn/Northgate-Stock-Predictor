@@ -1,0 +1,26 @@
+{
+  "1": {
+    "model": "LSTM",
+    "n_buy": 1052,
+    "n_sell": 1163,
+    "n_hold": 1205,
+    "hit_rate_buy": 0.5066539923954373,
+    "hit_rate_sell": 0.4651762682717111,
+    "buy_and_hold_up_rate": 0.5134502923976608,
+    "avg_fwd_return_buy": 0.0005878342560075204,
+    "avg_fwd_return_all": 0.00039747920662771966,
+    "beats_buy_and_hold_hit_rate": false
+  },
+  "5": {
+    "model": "GRU",
+    "n_buy": 1101,
+    "n_sell": 1123,
+    "n_hold": 1156,
+    "hit_rate_buy": 0.522252497729337,
+    "hit_rate_sell": 0.45592163846838824,
+    "buy_and_hold_up_rate": 0.5307692307692308,
+    "avg_fwd_return_buy": 0.0012970559930494333,
+    "avg_fwd_return_all": 0.0019053140182040682,
+    "beats_buy_and_hold_hit_rate": false
+  }
+}

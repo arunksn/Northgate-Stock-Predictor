@@ -1,0 +1,66 @@
+{
+  "ridge_h1": {
+    "best_params": {
+      "alpha": 1000
+    },
+    "cv_mae": 0.011823788411551848
+  },
+  "rf_h1": {
+    "best_params": {
+      "max_depth": 4,
+      "min_samples_leaf": 50,
+      "n_estimators": 200
+    },
+    "cv_mae": 0.011831876967085413
+  },
+  "xgb_h1": {
+    "best_params": {
+      "learning_rate": 0.03,
+      "max_depth": 2,
+      "n_estimators": 200,
+      "subsample": 0.8
+    },
+    "cv_mae": 0.012093037893695988
+  },
+  "svr_h1": {
+    "best_params": {
+      "C": 0.1,
+      "epsilon": 0.1,
+      "gamma": "scale",
+      "kernel": "rbf"
+    },
+    "cv_mae": 0.011823088095759066
+  },
+  "ridge_h5": {
+    "best_params": {
+      "alpha": 1000
+    },
+    "cv_mae": 0.02855301359815977
+  },
+  "rf_h5": {
+    "best_params": {
+      "max_depth": 4,
+      "min_samples_leaf": 20,
+      "n_estimators": 200
+    },
+    "cv_mae": 0.02911791710100578
+  },
+  "xgb_h5": {
+    "best_params": {
+      "learning_rate": 0.03,
+      "max_depth": 2,
+      "n_estimators": 200,
+      "subsample": 0.8
+    },
+    "cv_mae": 0.029278225549538562
+  },
+  "svr_h5": {
+    "best_params": {
+      "C": 0.1,
+      "epsilon": 0.1,
+      "gamma": "scale",
+      "kernel": "rbf"
+    },
+    "cv_mae": 0.02862013016693938
+  }
+}
