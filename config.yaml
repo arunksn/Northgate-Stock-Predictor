@@ -1,0 +1,70 @@
+# Single source of configuration (PRD Section 15.3): universe, dates, split ratios, sequence length, seed.
+seed: 42
+
+data:
+  source: yfinance            # yfinance (real, default) | synthetic (offline stand-in, see README)
+  universe: [AAPL, MSFT, JPM, XOM, JNJ, PG, NVDA, KO, CAT, HD]
+  benchmark: "^GSPC"
+  vix: "^VIX"
+  sector_proxy: XLK           # sector ETF used as the sector/breadth proxy (PRD 3.2)
+  start: "2015-01-01"
+  end: "2026-10-28"           # fixed end date so a rebuild reproduces the same dataset
+  macro_series: [DGS10, DGS3MO, CPIAUCSL, UNRATE]
+  # Publication lag (calendar days) so a macro figure is only "known" after release (no look-ahead)
+  macro_publication_lag_days: {DGS10: 1, DGS3MO: 1, CPIAUCSL: 45, UNRATE: 35}
+  news:
+    provider: finnhub         # reads FINNHUB_API_KEY from the environment
+    lookback_days: 365
+    market_query: SPY         # proxy symbol for broad-market headlines
+
+cleaning:
+  max_ffill_gap: 3            # sessions
+  outlier_z: 5.0
+  z_window: 63
+  iqr_k: 1.5
+  volume_event_z: 3.0         # volume spike => treated as a genuine event (earnings etc.), keep
+
+features:
+  seq_len: 60
+  horizons: [1, 5]            # next-day and multi-day forward closing price
+  n_lags: 5
+  target: "forward log return of adjusted close over `horizon` days (price = P_t * exp(pred))"
+
+split:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+  cv_splits: 5
+
+ml:
+  ridge:   {alpha: [0.1, 1, 10, 100, 1000]}
+  rf:      {n_estimators: [200], max_depth: [4, 8], min_samples_leaf: [20, 50]}
+  xgb:     {learning_rate: [0.03, 0.1], max_depth: [2, 4], subsample: [0.8], n_estimators: [200, 400]}
+  svr:     {C: [0.1, 1.0], epsilon: [0.1], gamma: [scale], kernel: [rbf]}
+
+dl:
+  epochs: 200
+  batch_size: 64
+  patience: 12
+  learning_rate: 0.001
+
+sentiment:
+  primary: finbert            # falls back to vader (logged) if the FinBERT weights cannot be downloaded
+  market_close_hour: 16       # news after the 16:00 close maps to the next session
+  mood_threshold: 0.05
+
+portfolio:
+  risk_free_rate: 0.04
+  max_weight: 0.30
+  mu_blend: 0.5               # weight on model-implied mu (1-mu_blend on historical mean)
+  mc_portfolios: 20000
+  bootstrap_reps: 2000
+  bootstrap_block: 21
+
+recommend:
+  w_forecast: 1.0
+  w_sentiment: 0.5
+  w_risk: 0.5
+  low: -0.5
+  high: 0.5
+  rebalance_band: 0.05
