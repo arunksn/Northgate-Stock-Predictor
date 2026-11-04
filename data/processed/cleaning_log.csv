@@ -1,0 +1,10 @@
+ticker,date,stage,field,action
+AAPL,2016-03-15,missing,OHLCAV,forward-filled (never back-filled)
+AAPL,2016-03-16,missing,OHLCAV,forward-filled (never back-filled)
+AAPL,2019-10-11,missing,OHLCAV,forward-filled (never back-filled)
+AAPL,2019-10-15,missing,OHLCAV,forward-filled (never back-filled)
+AAPL,2019-10-16,missing,OHLCAV,forward-filled (never back-filled)
+JPM,2017-10-16,ohlc_invariant,OHLC,quarantined (set NaN) and re-imputed from last valid session
+MSFT,2016-12-29,dedupe,all,conflicting duplicate; kept last (vendor-adjusted) record
+MSFT,2018-08-02,dedupe,all,conflicting duplicate; kept last (vendor-adjusted) record
+XOM,2020-12-23,outlier,OHLC/Adj Close,winsorised confirmed bad print: 246.34 -> 211.92
