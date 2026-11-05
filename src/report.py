@@ -71,7 +71,7 @@ def build():
                     for run in para.runs: run.font.size = Pt(8.5)
         doc.add_paragraph()
 
-    # ---------------- title ----------------
+    # title
     t = doc.add_heading("AI-Based Stock Market Prediction & Portfolio Optimization System", 0)
     p("Northgate Quantitative Research - Applied Machine Learning Capstone - Written report", italic=True)
     p(DISCLAIMER, italic=True)
@@ -82,7 +82,7 @@ def build():
                      "earnings jumps, injected data defects). The pipeline code is the deliverable; the results demonstrate that it runs end to end and "
                      "are NOT evidence about real markets. Re-run `make all` with data.source: yfinance to regenerate this report on real data.").bold = False
 
-    # ---------------- 1 exec summary ----------------
+    # 1 exec summary
     h1("1. Executive summary")
     p("This project delivers a layered, reproducible pipeline - ingestion, cleaning, features, eight forecasting models, news sentiment, "
       "mean-variance optimisation, a rule-based recommender and a Streamlit dashboard - that moves from raw market data to a risk-aware, explainable allocation. "
@@ -101,7 +101,7 @@ def build():
     p("The grading philosophy of the brief applies: a modest, correct, leakage-free result with honest analysis is the goal. "
       + ("Where an acceptance bar is not met, the report says so (Section 14)." ))
 
-    # ---------------- 2 scope ----------------
+    # 2 scope
     h1("2. Problem statement and scope")
     p("A price forecast has no economic meaning until it is converted into a risk-adjusted allocation and compared with a sensible benchmark. "
       "The system therefore treats forecasting and allocation as one pipeline: sentiment feeds the forecasting layer, forecasts feed the optimisation "
@@ -109,7 +109,7 @@ def build():
     p(f"Universe: {', '.join(cfg['data']['universe'])}; benchmark {cfg['data']['benchmark']}; VIX; sector proxy {cfg['data']['sector_proxy']}; "
       f"horizons {H} trading days; target = forward log return of the adjusted close (price forecast = P_t x exp(prediction)).")
 
-    # ---------------- 3 data ----------------
+    # 3 data
     h1("3. Data and cleaning pipeline")
     s = dq["summary"]
     p(f"Source of this run: {s['source']}. The cleaning function (src/clean.py) is ordered and idempotent: de-duplicate, align to the {cfg['data']['benchmark']} "
@@ -120,7 +120,7 @@ def build():
     tab(pd.DataFrame([[k.replace("_", " "), v] for k, v in s.items() if k not in ("contract", "source")], columns=["Data-quality metric", "Value"]), idx=False)
     p("Data contract (PRD 3.4): " + "; ".join(f"{k.replace('_', ' ')} = {'PASS' if v else 'FAIL'}" for k, v in s["contract"].items()) + ".")
 
-    # ---------------- 4 features ----------------
+    # 4 features
     h1("4. Feature engineering and leakage controls")
     from .features import FAMILIES
     tab(pd.DataFrame([[k, ", ".join(v)] for k, v in FAMILIES.items()], columns=["Family", "Features (all computed from data at or before t)"]), idx=False)
@@ -131,7 +131,7 @@ def build():
       "walk-forward CV with the scaler refit inside every fold; (6) news after the 16:00 close is mapped to the next session; (7) macro releases respect publication lags; "
       "(8) the best model is chosen on validation error, never on the test window.")
 
-    # ---------------- 5 EDA ----------------
+    # 5 EDA 
     h1("5. Exploratory data analysis")
     p("The notebook notebooks/01_eda.ipynb contains every required analysis; each ends in a computed finding that changes a later decision.")
     a = eda["adf"]; c = eda["corr"]; v = eda["vol"]; d = eda["dist"]; se = eda["season"]
@@ -143,8 +143,11 @@ def build():
     fig(FIGS / "eda_corr_heatmap.png", 6.2, "Figure 1 - Pearson and Spearman return correlations")
     fig(FIGS / "eda_distribution.png", 5.4, "Figure 2 - Return distribution: fat tails and negative-skew check")
     fig(FIGS / "eda_rolling_vol_vix.png", 5.2, "Figure 3 - Rolling volatility vs VIX")
+    fig(FIGS / f"eda_trend_{cfg['data']['universe'][0]}.png", 5.2, f"Figure 3b - Price (log scale) with 50/200-day moving averages and volume, {cfg['data']['universe'][0]}")
+    fig(FIGS / "eda_seasonality.png", 6.3, "Figure 3c - Month and weekday average returns; STL seasonal component")
+    fig(FIGS / "eda_seasonal_heatmap.png", 5.2, "Figure 3d - Average monthly return by year x month")
 
-    # ---------------- 6 maths ----------------
+    # 6 maths
     h1("6. Mathematical foundations (from scratch, verified)")
     p("src/mathfin.py implements returns, variance, covariance, correlation, Beta, portfolio variance w'Sw, Sharpe, Sortino, maximum drawdown, Calmar, "
       "historical and Student-t VaR, a block-bootstrap Sharpe confidence interval, the error metrics, and the manual gradient-descent regression of Listing 7.1. "
@@ -153,7 +156,7 @@ def build():
     g = mv["gd_vs_ols"]
     p(f"Gradient descent converged to w = {g['gd_w']}, b = {g['gd_b']}; closed-form OLS gives w = {g['ols_w']}, b = {g['ols_b']}.")
 
-    # ---------------- 7 ML ----------------
+    # 7 ML 
     h1("7. Classical machine-learning models")
     p("Linear/Ridge, Random Forest, XGBoost and SVR consume the same engineered feature table and the same chronological samples as the deep models. "
       "Each is tuned by grid search over an expanding-window, date-based TimeSeriesSplit (5 folds, embargo = horizon) inside the training split, with the "
@@ -161,7 +164,7 @@ def build():
     tab(pd.DataFrame([[k, ", ".join(f"{a}={b}" for a, b in v["best_params"].items()), f"{v['cv_mae']:.5f}"] for k, v in tun.items()],
                      columns=["Model_horizon", "Selected hyper-parameters", "CV MAE (scaled-return units)"]), idx=False)
 
-    # ---------------- 8 DL ----------------
+    # 8 DL 
     h1("8. Deep-learning models")
     p("LSTM, GRU, Bidirectional LSTM and a 2-block Transformer encoder (sinusoidal positional encoding, 4-head attention) are trained on (samples, 60, features) windows with "
       "Adam (1e-3), Huber loss, batch 64, shuffle=False, dropout and early stopping (patience 12, best weights restored) on the chronological validation split. "
@@ -172,8 +175,12 @@ def build():
     for i, n in enumerate(["lstm", "gru", "bilstm", "transformer"]):
         cell = t2.rows[i // 2].cells[i % 2]; cell.paragraphs[0].add_run().add_picture(str(FIGS / f"loss_{n}_h{h0}.png"), width=Inches(3.1))
     p("Figure 4 - Train vs validation loss for each architecture (horizon 1). A widening gap is reported as overfitting, not hidden.", italic=True)
+    t3 = doc.add_table(rows=2, cols=2)
+    for i, n in enumerate(["lstm", "gru", "bilstm", "transformer"]):
+        cell = t3.rows[i // 2].cells[i % 2]; cell.paragraphs[0].add_run().add_picture(str(FIGS / f"loss_{n}_h{H[1]}.png"), width=Inches(3.1))
+    p(f"Figure 4b - Loss curves for the {H[1]}-day horizon.", italic=True)
 
-    # ---------------- 9 comparison ----------------
+    # 9 comparison 
     h1("9. Headline result: eight models vs the random walk")
     fmt = {"RMSE": "{:.3f}", "MAE": "{:.3f}", "MAPE": "{:.2f}", "R2": "{:.4f}", "DirAcc": "{:.1f}", "n": "{:.0f}"}
     for h in H:
@@ -198,7 +205,7 @@ def build():
             "(fewer parameters to overfit, and the deep nets' extra capacity has little signal to capture); the loss-curve diagnostics above show where the deep models "
             "overfit or fail to learn.")
 
-    # ---------------- 10 sentiment ----------------
+    # 10 sentiment 
     h1("10. Sentiment module and its measured effect")
     p(f"Headlines are cleaned (lower-case, strip tickers/URLs, expand abbreviations), scored, mapped to the next session when published after the 16:00 close, and aggregated "
       f"to a daily mean polarity per asset with a 3-day momentum and a news-volume spike flag. Scorer requested: {sinfo['requested']}; scorer used in this run: {sinfo['scorer_used']}"
@@ -212,7 +219,7 @@ def build():
       + " on this dataset" + (" (the changes are small relative to run-to-run and sampling noise; one retrained model per arm cannot establish significance)" ) + ". " + ("Because this run uses synthetic headlines whose tone merely reacts to same-day returns, no incremental predictive information is expected." if synth else
                               "Free news APIs cover only about a year of history, which limits the sentiment training window."))
 
-    # ---------------- 11 portfolio ----------------
+    # 11 portfolio 
     h1("11. Portfolio optimisation (Modern Portfolio Theory)")
     p(f"Expected returns: {por['mu_method']}. This blend is documented and justified as a hedge: historical means are backward-looking and noisy, model-implied returns are "
       f"forward-looking but shrunk towards zero, and blending limits reliance on either. Covariance: Ledoit-Wolf shrinkage. Constraints: long-only, fully invested, "
@@ -234,7 +241,7 @@ def build():
          if por["acceptance_sharpe_gt_equal_weight"] else "The acceptance bar (optimised Sharpe > equal-weight) is NOT met."))
     fig(FIGS / "backtest.png", 6.3, "Figure 7 - Out-of-sample growth and drawdown")
 
-    # ---------------- 12 recommendations ----------------
+    # 12 recommendations 
     h1("12. Recommendation engine")
     rc = cfg["recommend"]
     p(f"Composite = {rc['w_forecast']} x forecast + {rc['w_sentiment']} x sentiment - {rc['w_risk']} x risk, each sub-signal z-scored across the universe per date; the risk signal averages "
@@ -247,15 +254,20 @@ def build():
         rows.append([h, v["model"], v["n_buy"], f_(v["hit_rate_buy"]), v["n_sell"], f_(v["hit_rate_sell"]), f"{v['buy_and_hold_up_rate']:.1%}"])
     tab(pd.DataFrame(rows, columns=["Horizon", "Model", "BUY calls", "BUY hit-rate", "SELL calls", "SELL hit-rate", "Buy-and-hold up-rate"]), idx=False)
     p("Hit-rate = share of calls followed by a forward return of the called sign on the test window; the buy-and-hold up-rate is the unconditional share of positive forward returns.")
+    for h, v in rb.items():
+        if v["hit_rate_buy"] is not None:
+            p(f"Horizon {h}: BUY calls were right {v['hit_rate_buy']:.1%} of the time against an unconditional up-rate of {v['buy_and_hold_up_rate']:.1%} "
+              f"-> {'better' if v['beats_buy_and_hold_hit_rate'] else 'NOT better'} than buy-and-hold on hit-rate; average forward return after BUY "
+              f"{v['avg_fwd_return_buy']:.3%} vs {v['avg_fwd_return_all']:.3%} for all days. The rules are transparent and explainable, but this run gives no evidence that they add value.")
 
-    # ---------------- 13 dashboard ----------------
+    # 13 dashboard 
     h1("13. Dashboard and reproducibility")
     p("dashboard/app.py is a single Streamlit application with the seven required panels (Overview, Price & prediction, Model comparison, Portfolio analytics, Risk dashboard, "
       "Sentiment, Recommendations), Plotly charts with hover detail, controls for ticker, horizon and risk-free rate, cached loading of pre-computed outputs (it never retrains) and a "
       "persistent educational-use disclaimer. Reproducibility: config.yaml holds the universe, dates, split ratios, sequence length and seed; requirements.txt is pinned; "
       "`make data` rebuilds the dataset, `make train` retrains and re-evaluates everything, `make report` regenerates the notebook and this report.")
 
-    # ---------------- 14 limitations ----------------
+    # 14 limitations 
     h1("14. Limitations and honest failure analysis")
     bl([("Synthetic data in this build: all reported figures illustrate the pipeline, not real-market skill. " if synth else "") +
         "A single hold-out test window (about 1.7 years) is one market regime; results can differ materially in other regimes.",
@@ -266,9 +278,12 @@ def build():
         "The backtest ignores transaction costs, slippage and taxes, and assumes daily rebalancing to constant weights.",
         "Sentiment: free news APIs provide roughly one year of history; the FinBERT scorer needs a model download; VADER is a general-purpose lexicon and mislabels some finance text.",
         "Survivorship bias: the universe is today's large-cap leaders; this flatters historical returns on real data.",
+        "Reproducibility: the classical models reproduce bit-for-bit on re-run; the deep models are seeded with TensorFlow op-determinism on, but CPU multithreading "
+        "means repeated runs can differ slightly (tested: the shipped LSTM predictions differ from a re-run by up to ~0.003 in log-return units; with oneDNN kernels disabled, which the code now does by default, two fresh runs agree to ~1e-4), so deep-model rankings should be read with that tolerance and the shipped deep-model numbers will move slightly if retrained.",
+        "Real-data ingestion (yfinance, FRED, Finnhub) could not be exercised against the live services in the build sandbox; the yfinance reshaping was unit-tested on a mock frame of the same layout, and the news fetcher needs a user-supplied API key.",
         "Dividend adjustments are taken from the vendor's adjusted close and cannot be independently verified."])
 
-    # ---------------- appendix ----------------
+    # appendix 
     h1("Appendix A - Deliverables checklist (PRD 19)")
     bl(["Git-ready repository with the layered structure of Listing 15.1 and pinned requirements - done",
         "Deterministic ingestion + cleaning scripts and a data-quality report (reports/results/data_quality_report.md) - done",

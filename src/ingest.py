@@ -16,9 +16,9 @@ log = get_logger("ingest")
 PRICE_FIELDS = ["Open", "High", "Low", "Close", "Adj Close", "Volume"]
 
 
-# --------------------------------------------------------------------------------------------
+
 # Real sources
-# --------------------------------------------------------------------------------------------
+
 def download_prices(cfg: dict) -> pd.DataFrame:
     """Listing 3.1: yfinance download with auto_adjust=False so both Close and Adj Close are kept."""
     import yfinance as yf
@@ -76,9 +76,8 @@ def download_news(cfg: dict) -> pd.DataFrame:
     return news.sort_values("timestamp").reset_index(drop=True)
 
 
-# --------------------------------------------------------------------------------------------
 # Offline stand-in generator (used ONLY when data.source == synthetic)
-# --------------------------------------------------------------------------------------------
+
 def _trading_calendar(start: str, end: str) -> pd.DatetimeIndex:
     from pandas.tseries.holiday import USFederalHolidayCalendar
     from pandas.tseries.offsets import CustomBusinessDay
@@ -141,7 +140,7 @@ def generate_synthetic(cfg: dict) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFr
                                 "Adj Close": vix, "Volume": 0.0, "Ticker": d["vix"]}))
     px = pd.concat(frames, ignore_index=True)
 
-    # ---- injected data defects ----
+    # injected data defects
     idx = px.index[px.Ticker == tickers[0]]
     px = px.drop(index=idx[[300, 301, 1200, 1201, 1202]])                      # short gaps (<=3 sessions)
     dup = px[px.Ticker == tickers[1]].iloc[[500, 900]].copy()

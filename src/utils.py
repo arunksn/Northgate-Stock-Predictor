@@ -1,6 +1,9 @@
 """Shared helpers: config, seeding, paths, logging."""
 from __future__ import annotations
 import logging, os, random
+
+# Disable oneDNN fused kernels before TensorFlow is imported: repeated CPU runs then agree to ~1e-4 instead of ~3e-3.
+os.environ.setdefault("TF_ENABLE_ONEDNN_OPTS", "0")
 from pathlib import Path
 import numpy as np
 import yaml
