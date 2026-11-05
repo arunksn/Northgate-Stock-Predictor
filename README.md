@@ -27,11 +27,6 @@ Offline demo of the exact shipped results: `python -m src.ingest --source synthe
 
 Note: free news tiers only return about a year of history, so on real data sentiment features are neutral (0) before that window.
 
-## If you received two zip files
-`stock-ai-system-code.zip` (code, notebook, dashboard, report) and `stock-ai-system-data-models.zip` (`data/` and `models/`) are two halves of one project.
-Unzip both into the **same** `stock-ai-system/` folder (merge, do not replace). `.parquet`, `.pkl` and `.keras` files are binary and are not meant to be opened in a text
-editor: view results through the dashboard (`make dashboard`), `reports/report.pdf`, `notebooks/01_eda.ipynb`, or the readable files in `reports/results/`
-(`.json`, `.csv`, `.md`). To peek at a parquet file: `python -c "import pandas as pd; print(pd.read_parquet('data/raw/news.parquet').head())"`.
 
 ## Known limitations (see also the report, Section 14)
 * Shipped results are synthetic (see above); live yfinance/FRED/Finnhub calls were not testable in the build sandbox (the yfinance reshaping is tested on a mock frame).
